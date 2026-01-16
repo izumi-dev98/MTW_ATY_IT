@@ -2,22 +2,59 @@ import React from 'react'
 import { NavLink } from "react-router-dom";
 import { useRef } from "react";
 
-const Kpi = () => {
+const Kpi = ({ kpi, addkpi }) => {
 
     const modalRef = useRef(null);
 
-  const openModal = () => {
-    if (modalRef.current) {
-      modalRef.current.classList.remove("hidden");
-    }
-  };
+    
+    const dateRef = useRef(null);
+    const issueTypeRef = useRef(null);
+    const departmentRef = useRef(null);
+    const descriptionRef = useRef(null);
+    const confirmByRef = useRef(null);
+    const statusRef = useRef(null);
+    const startTimeRef = useRef(null);
+    const endTimeRef = useRef(null);
+    const durtionRef = useRef(null)
+    const doneByRef = useRef(null);
+    const checkRef = useRef(null);
+    const solutionRef = useRef(null);
 
-  const closeModal = () => {
-    if (modalRef.current) {
-      modalRef.current.classList.add("hidden");
-    }
-  };
+    const openModal = () => {
+        if (modalRef.current) modalRef.current.classList.remove("hidden");
+    };
 
+    const closeModal = () => {
+        if (modalRef.current) modalRef.current.classList.add("hidden");
+    };
+
+    const saveKpiFromForm = async (e) => {
+        e.preventDefault();
+
+       
+        const newKpi = {
+            date: dateRef.current.value,
+            issue_type: issueTypeRef.current.value,
+            departments: departmentRef.current.value,
+            description: descriptionRef.current.value,
+            confirm_by: confirmByRef.current.value,
+            status: statusRef.current.value,
+            start_time: startTimeRef.current.value,
+            end_time: endTimeRef.current.value,
+            duration : durtionRef.current.value,
+            done_by: doneByRef.current.value,
+            check: checkRef.current.value,
+            solution: solutionRef.current.value,
+        };
+
+        console.log("Submitting KPI:", newKpi);
+
+        await addkpi(newKpi);
+
+      
+        e.target.reset();
+        closeModal();
+    }
 
     return (
         <>
@@ -28,8 +65,8 @@ const Kpi = () => {
                 <div className="flex items-center gap-4 font-bold">
 
                     <NavLink to="/" className="font-bold text-black">
-                           Home
-                        </NavLink>
+                        Home
+                    </NavLink>
                     <span>KPI Details</span>
                 </div>
 
@@ -44,7 +81,7 @@ const Kpi = () => {
             <div className="w-full max-h-[75vh] overflow-x-auto overflow-y-auto border rounded-lg mt-10 px-6">
                 <table className="min-w-[1800px] border-collapse">
 
-                  
+
                     <thead className="sticky top-0 bg-black text-white z-10">
                         <tr>
                             <th className="px-6 py-3 min-w-[80px] text-left">No</th>
@@ -63,47 +100,32 @@ const Kpi = () => {
                         </tr>
                     </thead>
 
-                   
-                    <tbody className="bg-white text-black divide-y divide-gray-200">
-                        <tr className="hover:bg-gray-100 transition">
-                            <td className="px-6 py-4">1</td>
-                            <td className="px-6 py-4">2024-01-15</td>
-                            <td className="px-6 py-4">Network</td>
-                            <td className="px-6 py-4">IT</td>
-                            <td className="px-6 py-4 whitespace-normal break-words">
-                                Internet connection down in main office building
-                            </td>
-                            <td className="px-6 py-4">Admin</td>
-                            <td className="px-6 py-4 text-green-600 font-semibold">Completed</td>
-                            <td className="px-6 py-4">09:00</td>
-                            <td className="px-6 py-4">10:15</td>
-                            <td className="px-6 py-4">1h 15m</td>
-                            <td className="px-6 py-4">John</td>
-                            <td className="px-6 py-4 text-green-600">✔</td>
-                            <td className="px-6 py-4 whitespace-normal break-words">
-                                Router restarted and ISP contacted
-                            </td>
-                        </tr>
 
-                        <tr className="hover:bg-gray-100 transition">
-                            <td className="px-6 py-4">2</td>
-                            <td className="px-6 py-4">2024-01-16</td>
-                            <td className="px-6 py-4">Hardware</td>
-                            <td className="px-6 py-4">Finance</td>
-                            <td className="px-6 py-4 whitespace-normal break-words">
-                                Printer not responding on floor 3
-                            </td>
-                            <td className="px-6 py-4">Manager</td>
-                            <td className="px-6 py-4 text-yellow-600 font-semibold">Pending</td>
-                            <td className="px-6 py-4">11:30</td>
-                            <td className="px-6 py-4">—</td>
-                            <td className="px-6 py-4">—</td>
-                            <td className="px-6 py-4">Alex</td>
-                            <td className="px-6 py-4 text-red-600">✖</td>
-                            <td className="px-6 py-4 whitespace-normal break-words">
-                                Awaiting replacement part
-                            </td>
-                        </tr>
+                    <tbody className="bg-white text-black divide-y divide-gray-200">
+                        {kpi.map((kpiData) =>
+
+
+                            <tr className="hover:bg-gray-100 transition">
+                                <td className="px-6 py-4">{kpiData.id}</td>
+                                <td className="px-6 py-4">{kpiData.date}</td>
+                                <td className="px-6 py-4">{kpiData.issue_type}</td>
+                                <td className="px-6 py-4">{kpiData.departments}</td>
+                                <td className="px-6 py-4 whitespace-normal break-words">
+                                    {kpiData.decription}
+                                </td>
+                                <td className="px-6 py-4">{kpiData.comfirm_by}</td>
+                                <td className="px-6 py-4 text-green-600 font-semibold">{kpiData.status}</td>
+                                <td className="px-6 py-4">{kpiData.start_time}</td>
+                                <td className="px-6 py-4">{kpiData.end_time}</td>
+                                <td className="px-6 py-4">{kpiData.end_time - kpiData.start_time}</td>
+                                <td className="px-6 py-4">{kpiData.done_by}</td>
+                                <td className="px-6 py-4 text-green-600">{kpiData.check}</td>
+                                <td className="px-6 py-4 whitespace-normal break-words">
+                                    {kpiData.solution}
+                                </td>
+                            </tr>)}
+
+
                     </tbody>
 
                 </table>
@@ -117,48 +139,52 @@ const Kpi = () => {
                     <div className="flex justify-between items-center">
                         <h2 className="text-2xl font-bold">ADD KPI</h2>
 
-                        <div className="flex items-center gap-4">
-                            <button className='btn' onClick={closeModal}>Cancel</button>
-                    <button className='btn bg-green-500 addBtn' onClick={closeModal}>Save</button>
-                        </div>
+
                     </div>
 
-                    <div className="flex  justify-between flex-wrap items-center text-black mt-10 gap-4">
-                    <input type="number" className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='No'/>
-                    <input type="Date" className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Date'/>
-                    <select name="" id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
-                        <option value="">Issue Type</option>
-                        <option value="">A</option>
-                    </select>
-                    <select name="" id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
-                        <option value="">Departments</option>
-                        <option value="">A</option>
-                    </select>
-                    <textarea name="" id="" className='h-20 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Description'></textarea>
-                <select name="" id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
-                        <option value="">Comfirm By</option>
-                        <option value="">A</option>
-                    </select>
-                     <select name="" id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
-                        <option value="">Status</option>
-                        <option value="">A</option>
-                    </select>
-                    <input type="datetime" className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Start Time'/>
-                    <input type="datetime" className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='End Time'/>
-                    <input type="datetime" className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Duration'/>
-                     <select name="" id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
-                        <option value="">Done By</option>
-                        <option value="">A</option>
-                    </select>
-                     <select name="" id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
-                        <option value="">Check</option>
-                        <option value="">A</option>
-                    </select>
-                     <textarea name="" id="" className='h-20 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Solution'></textarea>
-                </div>
+                    <form action="post" onSubmit={saveKpiFromForm}>
+                        <div className="flex  justify-between flex-wrap items-center text-black mt-10 gap-4">
+                            <input type="number" className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='No' />
+                            <input type="Date" ref={dateRef} name='date' className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Date' />
+                            <select name="" ref={issueTypeRef} id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
+                                <option value="">Issue Type</option>
+                                <option value="">A</option>
+                            </select>
+                            <select name="" ref={departmentRef} id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
+                                <option value="">Departments</option>
+                                <option value="">A</option>
+                            </select>
+                            <textarea name="" ref={descriptionRef} id="" className='h-20 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Description'></textarea>
+                            <select name="" ref={confirmByRef} id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
+                                <option value="">Comfirm By</option>
+                                <option value="">A</option>
+                            </select>
+                            <select name="" ref={statusRef} id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
+                                <option value="">Status</option>
+                                <option value="">A</option>
+                            </select>
+                            <input type="datetime" ref={startTimeRef} className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Start Time' />
+                            <input type="datetime" ref={endTimeRef} className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='End Time' />
+                            <input type="datetime" ref={durtionRef} className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Duration' />
+                            <select name="" id="" ref={doneByRef} className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
+                                <option value="">Done By</option>
+                                <option value="">A</option>
+                            </select>
+                            <select name="" id="" ref={checkRef} className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
+                                <option value="">Check</option>
+                                <option value="">A</option>
+                            </select>
+                            <textarea name="" ref={solutionRef} id="" className='h-20 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Solution'></textarea>
+                        </div>
+
+                        <div className="flex items-center gap-4 mt-5">
+                            <button className='btn' onClick={closeModal}>Cancel</button>
+                            <button className='btn bg-green-500 addBtn' type='submit'>Save</button>
+                        </div>
+                    </form>
                 </div>
 
-                
+
             </div>
 
 
