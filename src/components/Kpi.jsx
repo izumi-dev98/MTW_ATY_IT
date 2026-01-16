@@ -44,7 +44,7 @@ const Kpi = () => {
             <div className="w-full max-h-[75vh] overflow-x-auto overflow-y-auto border rounded-lg mt-10 px-6">
                 <table className="min-w-[1800px] border-collapse">
 
-                    {/* TABLE HEADER */}
+                  
                     <thead className="sticky top-0 bg-black text-white z-10">
                         <tr>
                             <th className="px-6 py-3 min-w-[80px] text-left">No</th>
@@ -63,7 +63,7 @@ const Kpi = () => {
                         </tr>
                     </thead>
 
-                    {/* TABLE BODY */}
+                   
                     <tbody className="bg-white text-black divide-y divide-gray-200">
                         <tr className="hover:bg-gray-100 transition">
                             <td className="px-6 py-4">1</td>

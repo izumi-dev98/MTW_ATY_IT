@@ -9,7 +9,7 @@
 
   .button {
 
-    @apply px-1  bg-black lg:h-16 lg:w-40 h-10 w-40 text-wrap text-white lg:rounded-2xl lfrounded-lg  transform transition duration-300 ease-in-out
+    @apply px-1  bg-black lg:h-16 lg:w-40 h-10 w-40 text-wrap text-white lg:rounded-2xl rounded-lg  transform transition duration-300 ease-in-out
                    hover:scale-110 italic font-semibold
   }
 
