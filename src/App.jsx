@@ -13,22 +13,28 @@ function App() {
   console.log(kpi);
 
   useEffect(() => {
-    kpidata()
-  }, [])
-
-  async function kpidata() {
+    
+    async function kpidata() {
 
     const { data } = await supabase.from('kpi').select('*')
     setKpi(data)
 
+
+    
+
   }
+
+  kpidata()
+  }, [])
+
+ 
 
   async function addkpi(newKpi) {
 
     console.log(newKpi);
     
 
-   await supabase.from('kpi').insert([newKpi]).select("*")
+   await supabase.from('kpi').insert([newKpi])
 
     
 

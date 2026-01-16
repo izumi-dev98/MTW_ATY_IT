@@ -6,12 +6,12 @@ const Kpi = ({ kpi, addkpi }) => {
 
     const modalRef = useRef(null);
 
-    
+
     const dateRef = useRef(null);
     const issueTypeRef = useRef(null);
     const departmentRef = useRef(null);
     const descriptionRef = useRef(null);
-    const confirmByRef = useRef(null);
+    const comfirmByRef = useRef(null);
     const statusRef = useRef(null);
     const startTimeRef = useRef(null);
     const endTimeRef = useRef(null);
@@ -31,27 +31,27 @@ const Kpi = ({ kpi, addkpi }) => {
     const saveKpiFromForm = async (e) => {
         e.preventDefault();
 
-       
+
         const newKpi = {
-            date: dateRef.current.value,
-            issue_type: issueTypeRef.current.value,
-            departments: departmentRef.current.value,
-            description: descriptionRef.current.value,
-            confirm_by: confirmByRef.current.value,
-            status: statusRef.current.value,
-            start_time: startTimeRef.current.value,
-            end_time: endTimeRef.current.value,
-            duration : durtionRef.current.value,
-            done_by: doneByRef.current.value,
-            check: checkRef.current.value,
-            solution: solutionRef.current.value,
+            date: dateRef.current.value || null,
+            issue_type: issueTypeRef.current.value || null,
+            departments: departmentRef.current.value || null,
+            decription: descriptionRef.current.value || null,
+            comfirm_by: comfirmByRef.current.value || null,
+            status: statusRef.current.value || null,
+            start_time: startTimeRef.current.value || null,
+            end_time: endTimeRef.current.value || null,
+            duration: durtionRef.current.value || null,
+            done_by: doneByRef.current.value || null,
+            check: checkRef.current.value || null,
+            solution: solutionRef.current.value || null,
         };
 
         console.log("Submitting KPI:", newKpi);
 
         await addkpi(newKpi);
 
-      
+
         e.target.reset();
         closeModal();
     }
@@ -117,7 +117,7 @@ const Kpi = ({ kpi, addkpi }) => {
                                 <td className="px-6 py-4 text-green-600 font-semibold">{kpiData.status}</td>
                                 <td className="px-6 py-4">{kpiData.start_time}</td>
                                 <td className="px-6 py-4">{kpiData.end_time}</td>
-                                <td className="px-6 py-4">{kpiData.end_time - kpiData.start_time}</td>
+                                <td className="px-6 py-4">{kpiData.duration}</td>
                                 <td className="px-6 py-4">{kpiData.done_by}</td>
                                 <td className="px-6 py-4 text-green-600">{kpiData.check}</td>
                                 <td className="px-6 py-4 whitespace-normal break-words">
@@ -144,37 +144,37 @@ const Kpi = ({ kpi, addkpi }) => {
 
                     <form action="post" onSubmit={saveKpiFromForm}>
                         <div className="flex  justify-between flex-wrap items-center text-black mt-10 gap-4">
-                            <input type="number" className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='No' />
-                            <input type="Date" ref={dateRef} name='date' className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Date' />
-                            <select name="" ref={issueTypeRef} id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
+                            <input type="number"  className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='No' readOnly />
+                            <input type="date"  ref={dateRef}  className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Date' required />
+                            <select  ref={issueTypeRef} id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' required>
                                 <option value="">Issue Type</option>
-                                <option value="">A</option>
+                                <option value="A">A</option>
                             </select>
-                            <select name="" ref={departmentRef} id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
+                            <select  ref={departmentRef} id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' required>
                                 <option value="">Departments</option>
-                                <option value="">A</option>
+                                <option value="A">A</option>
                             </select>
-                            <textarea name="" ref={descriptionRef} id="" className='h-20 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Description'></textarea>
-                            <select name="" ref={confirmByRef} id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
+                            <textarea  ref={descriptionRef} id="" className='h-20 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Description' required></textarea>
+                            <select  ref={comfirmByRef} id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' required>
                                 <option value="">Comfirm By</option>
-                                <option value="">A</option>
+                                <option value="A">A</option>
                             </select>
-                            <select name="" ref={statusRef} id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
+                            <select  ref={statusRef} id="" className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' required>
                                 <option value="">Status</option>
-                                <option value="">A</option>
+                                <option value="A">A</option>
                             </select>
-                            <input type="datetime" ref={startTimeRef} className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Start Time' />
-                            <input type="datetime" ref={endTimeRef} className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='End Time' />
-                            <input type="datetime" ref={durtionRef} className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Duration' />
-                            <select name="" id="" ref={doneByRef} className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
+                            <input type="date"  ref={startTimeRef} className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Start Time' required />
+                            <input type="date"  ref={endTimeRef} className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='End Time' required/>
+                            <input type="date"  ref={durtionRef} className=' h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Duration' required />
+                            <select  id=""  ref={doneByRef} className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' required>
                                 <option value="">Done By</option>
-                                <option value="">A</option>
+                                <option value="A">A</option>
                             </select>
-                            <select name="" id="" ref={checkRef} className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm'>
+                            <select  id=""  ref={checkRef} className='h-16 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' required>
                                 <option value="">Check</option>
-                                <option value="">A</option>
+                                <option value="A">A</option>
                             </select>
-                            <textarea name="" ref={solutionRef} id="" className='h-20 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Solution'></textarea>
+                            <textarea   ref={solutionRef} id="" className='h-20 w-80 px-6 py-2 rounded-lg border-2 border-black shadow-sm' placeholder='Solution' required></textarea>
                         </div>
 
                         <div className="flex items-center gap-4 mt-5">
